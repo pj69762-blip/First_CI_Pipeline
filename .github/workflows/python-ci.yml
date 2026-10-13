@@ -1,0 +1,31 @@
+name: Python CI Pipeline
+
+# Run the workflow whenever code is pushed or a pull request is opened.
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Download the repository code.
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Set up Python for the tests.
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+
+      # Install the dependencies listed in requirements.txt.
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+
+      # Run the automated tests.
+      - name: Run tests
+        run: python -m pytest
